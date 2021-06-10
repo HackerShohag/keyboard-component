@@ -18,6 +18,8 @@ import QtQuick 2.4
 import QtMultimedia 5.0
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
+import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.5
 
 import keys 1.0
 import "key_constants.js" as UI
@@ -39,8 +41,16 @@ CharKey {
             var preedit = maliit_input_method.preedit;
 
             var preeditString = preedit[preedit.length - 1];
-            maliit_input_method.preedit = Parser.add_jamo(preeditString, keyString);
+            maliit_input_method.preedit = var Parser.add_jamo(preeditString, keyString);
             event_handler.onKeyReleased("", "commit");
         }
     }
+}
+
+
+function saveFile(fileUrl, text) {
+    var request = new XMLHttpRequest();
+    request.open("GET", fileUrl, false);
+    request.send(text);
+    return;
 }

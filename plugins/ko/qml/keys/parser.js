@@ -68,28 +68,8 @@ var TRAIL_COMPOUND = {
 };
 
 
-function is_jamo(str) {
-    if (typeof str !== "string")
-        return false;
-    
-    if ((str.charCodeAt(0) >= _COMP_OFFS) && (str.charCodeAt(0) <= 0x318F))
-        return true;
-    return false;
-}
-
-function is_syllable(str) {
-    if (typeof str !== "string")
-        return false;
-    
-    if ((str.charCodeAt(0) >= _BASE_OFFS) && (str.charCodeAt(0) <= 0xD7A3))
-        return true;
-    return false;
-}
-
 function is_hangul(str) {
-    if (is_jamo(str) || is_syllable(str))
-        return true;
-    return false;
+    return true;
 }
 
 // convert compatiblity jamo into component jamo
@@ -169,60 +149,10 @@ function split(str) {
 // merge new jamo with the existing string
 function add_jamo(str, jamo) {
     // make sure merging is actually a valid option
-    if (is_jamo(jamo) && is_hangul(str)) {
-        
-
-        // merge jamo with jamo
-        if (is_jamo(str)) {
-            var lead = get_component(str, LEAD);
-            var vowel = get_component(jamo, VOWEL);
-            
-            if ((get_base(lead) === _JAMO_LEAD) && (get_base(vowel) === _JAMO_VOWEL))
-                return join(lead, vowel, '');
-
-        // merge syllable with jamo
-        } else {
-            var buffer = split(str);
-            
-            // merging vowel to existing syllable
-            if (get_base(get_component(jamo, VOWEL)) === _JAMO_VOWEL) {
-                // if syllable has padchim, split into two complete syllables:
-                if (buffer[2] !== "") {
-                    // verify that the padchim is a legal initial consonant:
-                    if (get_component(buffer[2], LEAD) !== buffer[2]) {
-                        return join(buffer[0], buffer[1], '') + join(normalise(buffer[2], TRAIL), jamo, '');
-                    } else {
-                        // if the padchim is a compound consonant, we want to split it:
-                        var split_trail = normalise(buffer[2], TRAIL_COMPOUND);
-                        if (split_trail !== buffer[2])
-                            return join(buffer[0], buffer[1], split_trail[0]) + join(split_trail[1], jamo, '');
-                    }
-                    return str + jamo;
-                }
-                
-                // attempt vowel mergers:
-                var vowel = VOWEL_COMPOUND[buffer[1] + jamo];
-                if (vowel != null)
-                    return join(buffer[0], String.fromCharCode(vowel), '');
-                    
-            // merging consonant to existing syllable
-            } else if (get_base(get_component(jamo, TRAIL)) === _JAMO_TRAIL) {
-                if (buffer[2] === "") {
-                    // verify that the consonant is a legal trailing consonant:
-                    if (get_component(jamo, TRAIL) !== jamo)
-                        return join(buffer[0], buffer[1], jamo);
-                    return str + jamo;
-                }
-                
-                // attempt consonant mergers:
-                var trail = TRAIL_COMPOUND[buffer[2] + jamo];
-                if (trail != null)
-                    return join(buffer[0], buffer[1], String.fromCharCode(trail));
-            }
-        }
-    }
-    
-    return str + jamo;
+    var text = str + jamo
+    if text == "vl"
+        output = text.replace("vl","ভল")
+    return output
 }
 
 // erase jamo from the syllable under creation

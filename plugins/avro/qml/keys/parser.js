@@ -24,31 +24,10 @@
 * http://www.decodeunicode.org/en/hangul_jamo
 * http://www.unicode.org/faq/korean.html
 **/
+var db = import("database.js");
 
-// merge new jamo with the existing string
-function add_jamo(str, jamo) {
-    // make sure merging is actually a valid option
-    var text = str + jamo
-    if text == "vl"
-        output = text.replace("vl","ভল")
+
+function avro(text) {
+        output = db.db_1[text]
     return output
-}
-
-// erase jamo from the syllable under creation
-function erase_jamo(str) {
-    if (is_jamo(str) || !is_hangul(str))
-        return "";
-
-    var buffer = split(str);    
-    if (buffer[2] !== "") {
-        var split_trail = normalise(buffer[2], TRAIL_COMPOUND);
-        if (split_trail !== buffer[2])
-            return join(buffer[0], buffer[1], split_trail[0]);
-        return join(buffer[0], buffer[1], "");
-    } else {
-        var split_vowel = normalise(buffer[1], VOWEL_COMPOUND);
-        if (split_vowel !== buffer[1])
-            return join(buffer[0], split_vowel[0], '');
-        return buffer[0];
-    }
 }

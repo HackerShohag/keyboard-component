@@ -26,7 +26,7 @@ ActionKey {
     action: "backspace";
 
     property string preedit: maliit_input_method.preedit
-    property string avrotemp: maliit_input_method.tmp
+    property string avrotmp: maliit_input_method.avrotmp
     property string m_preedit: ""
     property string syllable_preedit: ""
     property string last_preedit: ""
@@ -37,8 +37,8 @@ ActionKey {
 
     onReleased: {
           if (true) {
-              maliit_input_method.avrotmp = avrotemp.substring(0,avrotmp.length - 1);
-              maliit_input_method.preedit = avrotemp + avrotemp  // Parser.OmicronLab.Avro.Phonetic.parse(maliit_input_method.avrotmp);
+              maliit_input_method.avrotmp = avrotmp.substring(0,avrotmp.length - 1);
+              maliit_input_method.preedit = Parser.OmicronLab.Avro.Phonetic.parse(maliit_input_method.avrotmp);
            }
 //        if (isPreedit) {
 //            if (avrotmp.length > 0){ /* at least 2 length */
@@ -65,9 +65,8 @@ ActionKey {
 //    }
 //
     onPressed: {
-         maliit_input_method.avrotmp = avrotemp.substring(0,avrotmp.length - 1)
-         maliit_input_method.preedit = avrotemp + avrotemp
-  //Parser.OmicronLab.Avro.Phonetic.parse(avrotemp)
+         maliit_input_method.avrotmp = avrotmp.substring(0,avrotmp.length - 1)
+         maliit_input_method.preedit = Parser.OmicronLab.Avro.Phonetic.parse(maliit_input_method.avrotmp)
 //
 //        if (maliit_input_method.useAudioFeedback)
 //            audioFeedback.play();

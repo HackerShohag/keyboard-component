@@ -6,19 +6,19 @@ include($${TOP_SRCDIR}/config.pri)
 TARGET = dummy
 TEMPLATE = lib
 
-lang_ko.path = "$$UBUNTU_KEYBOARD_LIB_DIR/ko/"
-lang_ko.files = *.qml *.js
+lang_avro.path = "$$UBUNTU_KEYBOARD_LIB_DIR/avro/"
+lang_avro.files = *.qml *.js
 
-lang_ko_keys.path = "$$UBUNTU_KEYBOARD_LIB_DIR/ko/keys"
-lang_ko_keys.files = keys/*.qml keys/*.js
+lang_avro_keys.path = "$$UBUNTU_KEYBOARD_LIB_DIR/avro/keys"
+lang_avro_keys.files = keys/*.qml keys/*.js
 
-INSTALLS += lang_ko lang_ko_keys
+INSTALLS += lang_avro lang_avro_keys
 
 # for QtCreator
 OTHER_FILES += \
-    Keyboard_ko.qml \
-    Keyboard_ko_email.qml \
-    Keyboard_ko_url.qml \
-    Keyboard_ko_url_search.qml 
+    Keyboard_avro.qml \
+    Keyboard_avro_email.qml \
+    Keyboard_avro_url.qml \
+    Keyboard_avro_url_search.qml 
 
 
